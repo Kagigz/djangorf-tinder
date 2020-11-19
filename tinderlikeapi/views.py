@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from rest_framework import viewsets
 
-# Create your views here.
+from .serializers import AppUserSerializer
+from .models import AppUser
+
+
+class AppUserViewSet(viewsets.ModelViewSet):
+    queryset = AppUser.objects.all().order_by('email')
+    serializer_class = AppUserSerializer

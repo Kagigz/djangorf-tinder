@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.conf import settings
 
 class AppUser(models.Model):
 
@@ -7,7 +7,7 @@ class AppUser(models.Model):
     password = models.CharField(max_length=30)
     name = models.CharField(max_length=100)
     bio = models.TextField(max_length=500)
-    picture = models.ImageField()
+    picture = models.ImageField(upload_to="userpictures/")
     gender = models.CharField(max_length=30,
                 choices=[
                     ('female','Female'),

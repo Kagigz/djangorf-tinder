@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'tinderlikeapi.apps.TinderlikeapiConfig'
+    'tinderlikeapi.apps.TinderlikeapiConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

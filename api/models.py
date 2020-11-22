@@ -1,5 +1,6 @@
 from django.db import models
 from PIL import Image, ImageFilter
+from uuid import uuid4 as uuid
 
 class AppUser(models.Model):
     """
@@ -24,17 +25,21 @@ class AppUser(models.Model):
 
     def save(self, *args, **kwargs):
         super(AppUser, self).save(*args, **kwargs)
-        picture_path = self.picture.path
-        self.modify_picture(picture_path)
+        try:
+            picture_path = self.picture.path
+            self.modify_picture(picture_path)
+        except Exception as e:
+            print(f"Error modifying profile picture: {e}")
 
     def modify_picture(self, path, thumbnail_size=(600, 600), blur_radius=5):
         """
-        Resizes profile picture to thumbnail_size, blurs it and saves it
+        Resizes profile picture to thumbnail_size, blurs it and saves it to a new location
 
         Parameters:
         path (string): picture path
         thumbnail_size (int, int): size of the new picture (600x600 by default)
         blur_radius (int): blur radius for the gaussian blur filter (5 by default)
+
         """
         img = Image.open(path)
         img.thumbnail(thumbnail_size)

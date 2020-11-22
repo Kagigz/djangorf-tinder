@@ -1,8 +1,12 @@
 from rest_framework import serializers
-from .models import AppUser
+from .models import AppUser, GENDERS
 
 
-class AppUserSerializer(serializers.HyperlinkedModelSerializer):
+class AppUserSerializer(serializers.ModelSerializer):
+    preferred_gender = serializers.ChoiceField(choices=GENDERS, default='male')
+    gender = serializers.ChoiceField(choices=GENDERS, default='male')
+    picture = serializers.ImageField(allow_null=True)
+
     class Meta:
         model = AppUser
-        fields = ('id', 'email', 'password', 'name', 'bio', 'picture', 'gender', 'localisation')
+        fields = "__all__"

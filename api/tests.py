@@ -1,6 +1,4 @@
-from django.contrib.auth.models import User
 from django.urls import reverse
-from rest_framework.authtoken.models import Token
 from rest_framework.test import APITestCase
 from rest_framework import status
 from .models import AppUser
@@ -15,12 +13,19 @@ class AppUsersGetTest(APITestCase):
 
     def setUp(self):
 
+        test_image = SimpleUploadedFile(
+            name='test_image.jpg',
+            content=open('./api/test_data/profile_picture.jpg', 'rb').read(),
+            content_type='image/jpeg'
+            )
+
         self.sample_user = AppUser.objects.create(
             email='test@example.com',
             password='test123',
             name='Test User',
             bio='This is a test',
             gender='other',
+            preferred_gender='other',
             localisation='test'
         )
 
@@ -75,6 +80,7 @@ class AppUsersCreateTest(APITestCase):
             'bio': 'This is a test',
             'picture': test_image,
             'gender': 'other',
+            'preferred_gender':'other',
             'localisation': 'test'
             }
 
@@ -85,6 +91,7 @@ class AppUsersCreateTest(APITestCase):
             'bio': 'This is a test',
             'picture': test_image,
             'gender': 'other',
+            'preferred_gender':'other',
             'localisation': 'test'
             }
 
@@ -93,6 +100,7 @@ class AppUsersCreateTest(APITestCase):
             'password': 'test123',
             'bio': 'This is a test',
             'gender': 'other',
+            'preferred_gender':'other',
             'localisation': 'test',
             'wrongField': 'test'
             }
@@ -104,6 +112,7 @@ class AppUsersCreateTest(APITestCase):
             'bio': 'This is a test',
             'picture': test_image,
             'gender': 'other',
+            'preferred_gender':'other',
             'localisation': 'test'
             }
 

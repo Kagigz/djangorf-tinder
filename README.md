@@ -44,6 +44,6 @@
 ### Test
 
 * Run `python manage.py test` to test listing appUsers and creating one
-* Navigate to `http://localhost:8000/potentialmatches?gender=female&preferredGender=male&location=<LOCATION>&email=<EMAIL>
+* Navigate to `http://localhost:8000/potentialmatches?gender=female&preferredGender=male&location=<LOCATION\>&email=\<EMAIL\>
 to test listing potential matches (with a location and email that you used during the app user creation)
 

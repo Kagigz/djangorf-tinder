@@ -145,3 +145,58 @@ class AppUsersCreateTest(APITestCase):
         """
         response = self.client.post(self.url, self.invalid_sample_user3)
         self.assertEqual(response.status_code, 400)
+
+class PotentialMatchesGetTest(APITestCase):
+
+    """
+    Testing getting potential matches
+    """
+
+    def setUp(self):
+
+        self.search_params = {
+            'gender': 'male',
+            'preferredGender': 'female',
+            'location': 'test',
+            'email': 'user1@example.com'
+        }
+
+        self.sample_user_male = AppUser.objects.create(
+            email='user1@example.com',
+            password='test123',
+            name='Test User 1',
+            bio='This is a test',
+            gender='male',
+            preferred_gender='female',
+            localisation='test'
+        )
+
+        self.sample_user_female = AppUser.objects.create(
+            email='user2@example.com',
+            password='test123',
+            name='Test User 2',
+            bio='This is a test',
+            gender='female',
+            preferred_gender='male',
+            localisation='test'
+        )
+
+        self.url = reverse('potentialmatches-list')
+
+    def test_list_potentialmatches_when_params_valid(self):
+        """
+        Ensures we can list potential matches
+        """
+        response = self.client.get(self.url, self.search_params, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        # Expecting one match
+        self.assertEqual(response.data['count'], 1)
+
+    def test_list_potentialmatches_when_params_invalid(self):
+        """
+        Ensures we can list potential matches
+        """
+        response = self.client.get(self.url, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        # Expecting no match
+        self.assertEqual(response.data['count'], 0)

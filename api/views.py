@@ -56,7 +56,7 @@ class PotentialMatchesViewSet(viewsets.ModelViewSet):
                 gender=preferred_gender,
                 preferred_gender=gender,
                 localisation=location
-               ).exclude(email=email)
+               ).exclude(email=email).order_by('email')
 
         except Exception as e:
             print(f"Error - could not filter results due to missing request parameters: {e}")

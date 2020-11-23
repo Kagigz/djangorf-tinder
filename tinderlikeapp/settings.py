@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'api.apps.apiConfig',
     'rest_framework',
     'rest_framework_swagger',
+    'background_task',
 ]
 
 MIDDLEWARE = [

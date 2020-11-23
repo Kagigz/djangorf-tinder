@@ -21,7 +21,7 @@
 * Update password field to make it secure
 * Calculate distance between users based on location coordinates (for now it's checking if the locations are identical)
 * Add a view and routes for Matches
-* Add tests for Matches and PotentialMatches
+* Add tests for Matches
 * Document endpoint to list potential matches
 * Add support for several preferred genders
 * Update background task to run at a specific time every day instead of every 24h
@@ -45,3 +45,5 @@
 * Create a python virtual environment and run `pip install -r requirements.txt`
 * Run `python manage.py test` to test endpoints
 * Run `python manage.py runserver` to get the app running at http://localhost:8000/
+
+API documentation is available at http://localhost:8000/docs

@@ -4,7 +4,7 @@
 
 * Created AppUser Model and Serializer
 * Added viewset and routes for AppUser (list, create, retrieve, [...] actions)
-* Added tests for AppUser get & create
+* Added tests for AppUser get & create and Potential Matches
 * Updated profile picture saving to resize & blur pictures on upload
 * Added view and routes to filter potential matches based on parameters (gender, preferred_gender, location)
 * Added pagination on the filtered results

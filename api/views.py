@@ -31,7 +31,7 @@ class AppUserViewSet(viewsets.ModelViewSet):
 
 
 class StandardResultsSetPagination(PageNumberPagination):
-    page_size = 15
+    page_size = 5
     page_size_query_param = 'page_size'
     max_page_size = 1000
 
@@ -56,7 +56,7 @@ class PotentialMatchesViewSet(viewsets.ModelViewSet):
                 gender=preferred_gender,
                 preferred_gender=gender,
                 localisation=location
-               ).exclude(email=email)
+               ).exclude(email=email).order_by('email')
 
         except Exception as e:
             print(f"Error - could not filter results due to missing request parameters: {e}")

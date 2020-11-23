@@ -4,7 +4,7 @@
 
 * Created AppUser Model and Serializer
 * Added viewset and routes for AppUser (list, create, retrieve, [...] actions)
-* Added tests for AppUser get & create
+* Added tests for AppUser get & create and Potential Matches
 * Updated profile picture saving to resize & blur pictures on upload
 * Added view and routes to filter potential matches based on parameters (gender, preferred_gender, location)
 * Added pagination on the filtered results
@@ -12,6 +12,8 @@
 * Added a background-task to delete matches older than 14 days every 24h
 * Added Swagger UI for API documentation
 * Added a GitHub action for CI that checks linting errors and runs tests
+* Added docker & docker-compose files
+* Added a sample database for testing purposes
 
 ## To do
 
@@ -21,29 +23,25 @@
 * Add a view and routes for Matches
 * Add tests for Matches and PotentialMatches
 * Document endpoint to list potential matches
+* Add support for several preferred genders
 * Update background task to run at a specific time every day instead of every 24h
-* Add docker & docker-compose files
 
 ## How to test
 
 ### Setup
 
 * Download or clone this repository
-* Create a python virtual environment and run `pip install -r requirements.txt`
 * Create an *.env* file with a `SECRET_KEY` value
-
-### Add app users
-
-* Run `python manage.py makemigrations`
-* Run `python manage.py migrate`
-* Run `python manage.py createsuperuser`
-* Run `python manage.py runserver`
-* Navigate to [localhost:8000/admin](http://localhost:8000/admin)
-* Add several users
 
 ### Test
 
-* Run `python manage.py test` to test listing appUsers and creating one
-* Navigate to `http://localhost:8000/potentialmatches?gender=female&preferredGender=male&location=<LOCATION\>&email=\<EMAIL\>
-to test listing potential matches (with a location and email that you used during the app user creation)
+#### With docker
 
+* Run `docker-compose run web python manage.py test` to test endpoints
+* Run `docker-compose up` to get the app running at http://localhost:8000/
+
+#### Without docker
+
+* Create a python virtual environment and run `pip install -r requirements.txt`
+* Run `python manage.py test` to test endpoints
+* Run `python manage.py runserver` to get the app running at http://localhost:8000/

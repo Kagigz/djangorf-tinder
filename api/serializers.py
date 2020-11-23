@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import AppUser, GENDERS
+from .models import AppUser, Match, GENDERS
 
 
 class AppUserSerializer(serializers.ModelSerializer):
@@ -10,3 +10,10 @@ class AppUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = AppUser
         fields = "__all__"
+
+class MatchSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Match
+        fields = "__all__"
+

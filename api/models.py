@@ -1,6 +1,9 @@
 from django.db import models
+
 from PIL import Image, ImageFilter
-from uuid import uuid4 as uuid
+from uuid import uuid4
+from background_task import background
+from datetime import datetime, timedelta
 
 GENDERS = (
     ('female', 'Female'),
@@ -22,6 +25,8 @@ class AppUser(models.Model):
     gender = models.CharField(max_length=30, choices=GENDERS)
     preferred_gender = models.CharField(max_length=30, choices=GENDERS)
     localisation = models.CharField(max_length=200)
+    uuid = models.UUIDField(default=uuid4, primary_key=True, editable=False)
+
 
     def __str__(self):
         return self.email
@@ -48,3 +53,34 @@ class AppUser(models.Model):
         img.thumbnail(thumbnail_size)
         blurred_img = img.filter(ImageFilter.GaussianBlur(blur_radius))
         blurred_img.save(path)
+
+
+class Match(models.Model):
+    """
+    Matches between users
+    """
+
+    user1 = models.ForeignKey(AppUser, related_name='user1_set', on_delete=models.CASCADE)
+    user2 = models.ForeignKey(AppUser, related_name='user2_set', on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now=True)
+    match_id = models.UUIDField(default=uuid4, primary_key=True, editable=False)
+    
+    def __str__(self):
+        return f"{self.user1.__str__()} x {self.user2.__str__()}"
+
+    @background(schedule=60*60-24)
+    def delete_old_matches(self):
+        """
+        Delete matches older than 14 days
+        """
+        NUMBER_OF_DAYS = 14
+
+        try:
+            old_matches = Match.object.all().filter(
+                created__gte=datetime.now()-60*60*24*NUMBER_OF_DAYS
+            )
+            old_matches.delete()
+            print(f"Deleted {len(old_matches)} old matches")
+        except Exception as e:
+            print(f"Error deleting old matches: {e}")
+
